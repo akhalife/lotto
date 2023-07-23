@@ -2,46 +2,81 @@
 allowmixing
 skinparam linetype ortho
 
-class DateiIO {
-    lesenDatei()
-    schreibenDatei()
-    löschenDatei()
-}
-
 class LottoCLI {
-   main()
+   + main()
+   - void auswahlLottoSpiel(String auswahlSpiel)
+   - void unglücksZahlenErstellen()
+   - void unglücksZahlenLöschen()
+   - unglücksZahlenAusgeben(): String
 }
 
 class lottoschein{
     unglücksZahlen[]: int
 
-    erstellenUnglückszahlen()
-    löschenUnglückszahlen()
-    ausgabeUnglückszahlen()
+    + void erstellenUnglückszahl(int zahl)
+    + void löschenUnglückszahl(int zahl)
+    + ausgabeUnglückszahl(): String
 }
 
 class lotto6aus49 extends lottoschein implements QuickTippGenerator{
-    'man kann max 12 spielfelder erzeugen
-    spielfeld[][49]: int
+    - tippReihe : int[6]
 }
 
 class eurojackpot extends lottoschein implements QuickTippGenerator{
-    'man kann max 12 spielfelder erzeugen
-    FünfAusFünfzigSpielfeld[][50]: int
-    zweiAusZehnFeld[10]: int
+    - FünfAusFünfzigTippreihe[5]
+    - zweiAusZehnTippreihe: int[2]
+    + erzeugeZweiAusZehn(): int[]
+    + void ausgabeZweiAusZehn()
     }
 
-
 interface QuickTippGenerator{
-    erzeugeTippreihe()
-    ausgabeTippreihe()
+    + erzeugeTippreihe(): int[]
+    + ausgabeTippreihe(): String
 }
 
 file "Unglückszahlen.txt"
 
+note right of QuickTippGenerator::erzeugeTippreihe
+- Ausschliessen der Unglückszahlen aus der Tippreihe
+- Solange Tippreihe erzeugen bis User Eingabe stoppt
+
+end note
+
+note right of QuickTippGenerator::ausgabeTippreihe
+    Sortierte, aufsteigende Reihenfolge der Zahlen der Tippreihe,
+    Erkennbare Trennung für die Eurojackpot-Tippreihe erst 5aus50 dann 2aus10.
+end note
+
+note right of LottoCLI::auswahlLottoSpiel
+- Wenn User nichts angibt,
+   wird Lotto 6aus49 ausgewählt
+- Ungültiger Eingabeparameter:
+   Fehlermeldung mit Usereingabe
+end note
+
+note left of lottoschein::erstellenUnglückszahlen
+- Gültiger Zahlenraum: 1 bis 50
+- Fehlermeldung bei Angabe einer Zahl
+   außerhalb des gültigen Zahlenraums:
+   Ausgabe des gültigen Zahlenraums
+end note
+
+note left of lotto6aus49::tippReihe
+Gülter Zahlenraum: 1 bis 49
+end note
+
+note left of eurojackpot::FünfAusFünfzigTippreihe
+Gültiger Zahlenraum: 1 bis 50
+end note
+
+note left of eurojackpot::zweiAusZehnTippreihe
+Gültiger Zahlenraum: 1 bis 10
+end note
+
 eurojackpot -[hidden]-> QuickTippGenerator
 eurojackpot -[hidden]--> lottoschein
-lottoschein "1" *-- "1" LottoCLI
-lottoschein "1" *--- "1" DateiIO
-DateiIO -- "Unglückszahlen.txt"
+lottoschein "2" *---- "1" LottoCLI
+lottoschein -- "Unglückszahlen.txt"
+
+lottoschein -[hidden]- lotto6aus49
 @enduml
