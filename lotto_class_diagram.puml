@@ -1,0 +1,44 @@
+@startuml
+skinparam linetype ortho
+
+class DateiIO {
+    lesenDatei()
+    schreibenDatei()
+    löschenDatei()
+}
+
+class CLI {
+    startProgramm()
+}
+
+abstract class lottoschein{
+    unglücksZahlen[]: int
+
+    erstellenUnglückszahlen()
+    löschenUnglückszahlen()
+    ausgabeUnglückszahlen()
+}
+
+class lotto6aus49 extends lottoschein implements QuickTippGenerator{
+    'man kann max 12 spielfelder erzeugen
+    spielfeld[][49]: int
+}
+
+class eurojackpot extends lottoschein implements QuickTippGenerator{
+    'man kann max 12 spielfelder erzeugen
+    spielfeld[][50]: int
+    extraTippFeld[10]: int
+    }
+
+
+interface QuickTippGenerator{
+    erzeugeTippreihe()
+    ausgabeTippreihe()
+}
+
+
+eurojackpot -[hidden]-> QuickTippGenerator
+lottoschein "1" *-- "1" CLI
+lottoschein "1" *-- "1" DateiIO
+DateiIO -- file
+@enduml
