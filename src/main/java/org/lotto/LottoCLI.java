@@ -2,6 +2,8 @@ package org.lotto;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class LottoCLI {
 
@@ -26,7 +28,7 @@ public class LottoCLI {
             System.out.println("3. Option: Unglückszahlen ausgeben");
             System.out.println("4. Option: Tippreihe für Lotto 6aus49 erzeugen");
             System.out.println("5. Option: Tippreihe für Eurojackpot erzeugen");
-            System.out.println("6. Option: Tippreige für 6aus49 ausgeben");
+            System.out.println("6. Option: Tippreihe für 6aus49 ausgeben");
             System.out.println("7. Option: Tippreihe für Eurojackpot ausgeben");
             System.out.println("8. Exit");
             System.out.print("Wähle eine Option (1-7): ");
@@ -40,16 +42,30 @@ public class LottoCLI {
                     System.out.println("Du hast Option 1 ausgewählt: Unglückszahlen erstellen");
                     System.out.println("=====================================================");
                     System.out.println(" ");
+                    System.out.println("Gib eine Zahl zwischen 1 und 50 ein:");
 
-                    int[] ungluecksZahlen = lottoCLI.lesenNummernVonKommandozeile(6);
+                    String dateiName = "Unglueckszahlen.txt";
+                    int anzahlUnglueckszahlen;
 
-                    for (int i = 0; i <= ungluecksZahlen.length; i++){
+                    try {
+                        anzahlUnglueckszahlen= checkZeilenAnzahl(dateiName);
+                    } catch (IOException e) {
+                        System.err.println(e.getMessage());
+                        break;
+                    }
+
+                    int[] ungluecksZahlen = lottoCLI.lesenNummernVonKommandozeile(anzahlUnglueckszahlen);
+
+                    for (int j : ungluecksZahlen) {
                         try {
-                            lottoCLI.ungluecksZahlenErstellen(ungluecksZahlen[i]);
-                        } catch (IOException e){
-                            e.getStackTrace();
+                            lottoCLI.ungluecksZahlenErstellen(j);
+                        } catch (IOException e) {
+                            System.err.println(e.getMessage());
                         }
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 2:
@@ -59,14 +75,33 @@ public class LottoCLI {
                     System.out.println("=====================================================");
                     System.out.println(" ");
 
-                    Scanner eingabeUser = new Scanner(System.in);
-                    int zuLoeschendeUnglueckszahl = eingabeUser.nextInt();
+                    System.out.println("Hast du dir die vorhandenen Unglückszahlen angeschaut?");
+                    System.out.println(" ");
+                    System.out.println("Gib 1 für Ja ein");
+                    System.out.println("Gib 2 für Nein ein");
+                    System.out.println(" ");
+
+                    int auswahl = scanner.nextInt();
+
+                    if(auswahl == 2){
+                        System.out.println(" ");
+                        System.out.println("Lass dir die vorhandenen Unglückszahlen erstmal mit der Option 3 ausgeben und dann suche die " +
+                                "entsprechende zu löschende Zahl aus");
+                        break;
+                    }
+
+                    System.out.println("Wähle deine zu löschende Zahl aus den vorhandenen Unglückszahlen:");
+
+                    int zuLoeschendeUnglueckszahl = scanner.nextInt();
 
                     try {
                         lottoCLI.ungluecksZahlenLoeschen(zuLoeschendeUnglueckszahl);
-                    } catch (IOException e){
-                        e.getStackTrace();
+                    } catch (IOException | UnglueckszahlNotFoundException e){
+                        System.err.println(e.getMessage());
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 3:
@@ -79,7 +114,7 @@ public class LottoCLI {
                     try {
                         lottoCLI.ungluecksZahlenAusgeben();
                     } catch (IOException e){
-                        e.getStackTrace();
+                        System.err.println(e.getMessage());
                     }
                     break;
 
@@ -93,8 +128,11 @@ public class LottoCLI {
                     try {
                         lottoCLI.tippReihe6aus49Erzeugen();
                     } catch (EmptyArrayException e) {
-                        e.getStackTrace();
+                        System.err.println(e.getMessage());
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 5:
@@ -107,8 +145,11 @@ public class LottoCLI {
                     try {
                         lottoCLI.tippReiheEurojackpotErzeugen();
                     } catch (EmptyArrayException e) {
-                        e.getStackTrace();
+                        System.err.println(e.getMessage());
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 6:
@@ -121,8 +162,11 @@ public class LottoCLI {
                     try {
                         lottoCLI.tippReihe6aus49Ausgeben();
                     } catch (EmptyArrayException e) {
-                        e.getStackTrace();
+                        System.err.println(e.getMessage());
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 7:
@@ -135,8 +179,11 @@ public class LottoCLI {
                     try {
                         lottoCLI.tippReiheEurojackpotAusgeben();
                     } catch (EmptyArrayException e) {
-                        e.getStackTrace();
+                        System.err.println(e.getMessage());
                     }
+
+                    System.out.println(" ");
+
                     break;
 
                 case 8:
@@ -162,7 +209,7 @@ public class LottoCLI {
         System.out.println("Unglückszahl: " + ungluecksZahl + " wurde gespeichert.");
     }
 
-    private void ungluecksZahlenLoeschen(int ungluecksZahl) throws IOException {
+    private void ungluecksZahlenLoeschen(int ungluecksZahl) throws IOException, UnglueckszahlNotFoundException {
         Lottoschein.loeschenUnglueckszahl(ungluecksZahl);
         System.out.println("Unglückszahl: " + ungluecksZahl + " wurde gelöscht.");
     }
@@ -211,22 +258,31 @@ public class LottoCLI {
                     numbers[i] = scanner.nextInt();
                     break;
                 } catch (Exception e) {
+                    System.out.println(" ");
                     System.out.println("Ungültige Eingabe. Bitte gib eine ganze Zahl ein.");
                     scanner.nextLine();
                 }
             }
         }
 
-        scanner.close();
         return numbers;
     }
 
-    public Lotto6aus49 getLotto6aus49() {
-        return lotto6aus49;
+    public static int checkZeilenAnzahl(String dateiName) throws IOException {
+        int anzahlZeilen = 0;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(dateiName))) {
+            while (bufferedReader.readLine() != null) {
+                anzahlZeilen++;
+                if (anzahlZeilen > 5) {
+                    throw new IOException("Es befinden sich mehr als 5 Unglückszahlen. Lösche eine Unglückszahl um eine " +
+                            "neue hinzuzufügen.");
+                }
+            }
+        }
+        return anzahlZeilen;
     }
 
-    public Eurojackpot getEurojackpot() {
-        return eurojackpot;
-    }
 }
+
+
 
