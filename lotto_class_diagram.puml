@@ -4,10 +4,13 @@ skinparam linetype ortho
 
 class LottoCLI {
    + main()
-   - void auswahlLottoSpiel(String auswahlSpiel)
    - void unglücksZahlenErstellen()
    - void unglücksZahlenLöschen()
    - unglücksZahlenAusgeben(): String
+   - tippReihe6aus49Erzeugen(): int[]
+   - tippReiheEurojackpotErzeugen(): int[]
+   - tippReihe6aus49Ausgeben(): int[]
+   - tippReiheEurojackpotAusgeben(): int[]
 }
 
 class lottoschein{
@@ -26,7 +29,7 @@ class eurojackpot extends lottoschein implements QuickTippGenerator{
     - FünfAusFünfzigTippreihe[5]
     - zweiAusZehnTippreihe: int[2]
     + erzeugeZweiAusZehn(): int[]
-    + void ausgabeZweiAusZehn()
+    + ausgabeZweiAusZehn(): String
     }
 
 interface QuickTippGenerator{
@@ -38,8 +41,6 @@ file "Unglückszahlen.txt"
 
 note right of QuickTippGenerator::erzeugeTippreihe
 - Ausschliessen der Unglückszahlen aus der Tippreihe
-- Solange Tippreihe erzeugen bis User Eingabe stoppt
-
 end note
 
 note right of QuickTippGenerator::ausgabeTippreihe
@@ -71,6 +72,10 @@ end note
 
 note left of eurojackpot::zweiAusZehnTippreihe
 Gültiger Zahlenraum: 1 bis 10
+end note
+
+note right of LottoCLI::tippReihe6aus49Erzeugen
+Solange Tippreihe erzeugen bis User Eingabe stoppt
 end note
 
 eurojackpot -[hidden]-> QuickTippGenerator

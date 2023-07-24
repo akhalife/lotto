@@ -1,7 +1,7 @@
 package org.lotto;
 
 public interface QuickTippGenerator {
-    int[] erzeugeTippreihe();
-    String ausgabeTippreihe();
+    void erzeugeTippreihe(int[] ausschlussUnglueckszahlen) throws EmptyArrayException;
+    String ausgabeTippreihe() throws EmptyArrayException;
 }
 
