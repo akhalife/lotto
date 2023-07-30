@@ -48,7 +48,7 @@ public class LottoCLI {
                     int anzahlUnglueckszahlen;
 
                     try {
-                        anzahlUnglueckszahlen= checkZeilenAnzahl(dateiName);
+                        anzahlUnglueckszahlen = checkZeilenAnzahl(dateiName);
                     } catch (IOException e) {
                         System.err.println(e.getMessage());
                         break;
@@ -245,13 +245,13 @@ public class LottoCLI {
     }
 
 
-    public int[] lesenNummernVonKommandozeile(int numberOfNumbers) {
-        int[] numbers = new int[numberOfNumbers];
+    public int[] lesenNummernVonKommandozeile(int anzahlUnglueckszahlen) {
+        int[] numbers = new int[anzahlUnglueckszahlen];
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Gib " + numberOfNumbers + " Unglückszahlen ein:");
+        System.out.println("Gib " + anzahlUnglueckszahlen + " Unglückszahlen ein:");
 
-        for (int i = 0; i < numberOfNumbers; i++) {
+        for (int i = 0; i < anzahlUnglueckszahlen; i++) {
             while (true) {
                 try {
                     System.out.print("Zahl " + (i + 1) + ": ");
@@ -274,12 +274,12 @@ public class LottoCLI {
             while (bufferedReader.readLine() != null) {
                 anzahlZeilen++;
                 if (anzahlZeilen > 5) {
-                    throw new IOException("Es befinden sich mehr als 5 Unglückszahlen. Lösche eine Unglückszahl um eine " +
+                    throw new IOException("Es befinden sich mehr als 6 Unglückszahlen. Lösche eine Unglückszahl um eine " +
                             "neue hinzuzufügen.");
                 }
             }
         }
-        return anzahlZeilen;
+        return 6 - anzahlZeilen;
     }
 
 }

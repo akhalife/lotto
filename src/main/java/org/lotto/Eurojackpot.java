@@ -3,7 +3,7 @@ package org.lotto;
 import java.util.Arrays;
 
 public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
-    private final int[] fuenfAusFuenfzigTippreihe = new int[5];
+    private final int[] fuenfAusFuenfzigTippreihe = new int[6];
     private final int[] zweiAusZehnTippreihe = new int[2];
 
     @Override
@@ -13,7 +13,7 @@ public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
             throw new EmptyArrayException("Du hast keine Unglückszahlen hinzugefügt, bitte füge welche hinzu.");
         }
 
-        for (int i = 0; i <=5; i++){
+        for (int i = 0; i <= 5; i++){
             fuenfAusFuenfzigTippreihe[i] = zahlenGeneratorMitAussschlussVonUnglueckszahlen(1, 50,
                     ausschlussUnglueckszahlen);
         }
