@@ -11,7 +11,7 @@ public class LottoCLI {
     private final Eurojackpot eurojackpot = new Eurojackpot();
 
     public static void main(String[] args) {
-        displayMenu();
+            displayMenu();
     }
 
     public static void displayMenu() {
@@ -20,16 +20,16 @@ public class LottoCLI {
 
         while (true) {
             System.out.println(" ");
-            System.out.println("Willkommen im Lottoland. Wo der Spaß nie endet.");
+            System.out.println("Willkommen im L O T T O L A N D. Wo der Spaß nie endet.");
             System.out.println(" ");
             System.out.println("======= Menü =======");
-            System.out.println("1. Option: Unglückszahlen erstellen");
-            System.out.println("2. Option: Unglückszahl löschen");
-            System.out.println("3. Option: Unglückszahlen ausgeben");
-            System.out.println("4. Option: Tippreihe für Lotto 6aus49 erzeugen");
-            System.out.println("5. Option: Tippreihe für Eurojackpot erzeugen");
-            System.out.println("6. Option: Tippreihe für 6aus49 ausgeben");
-            System.out.println("7. Option: Tippreihe für Eurojackpot ausgeben");
+            System.out.println("Option 1: Unglückszahlen erstellen");
+            System.out.println("Option 2: Unglückszahl löschen");
+            System.out.println("Option 3: Unglückszahlen ausgeben");
+            System.out.println("Option 4: Tippreihe für Lotto 6aus49 erzeugen");
+            System.out.println("Option 5: Tippreihe für Eurojackpot erzeugen");
+            System.out.println("Option 6: Tippreihe für 6aus49 ausgeben");
+            System.out.println("Option 8: Tippreihe für Eurojackpot ausgeben");
             System.out.println("8. Exit");
             System.out.print("Wähle eine Option (1-7): ");
 
@@ -65,7 +65,6 @@ public class LottoCLI {
                     }
 
                     System.out.println(" ");
-
                     break;
 
                 case 2:
@@ -244,7 +243,6 @@ public class LottoCLI {
         System.out.println(eurojackpot.ausgabeZweiAusZehn());
     }
 
-
     public int[] lesenNummernVonKommandozeile(int anzahlUnglueckszahlen) {
         int[] numbers = new int[anzahlUnglueckszahlen];
         Scanner scanner = new Scanner(System.in);
@@ -268,7 +266,7 @@ public class LottoCLI {
         return numbers;
     }
 
-    public static int checkZeilenAnzahl(String dateiName) throws IOException {
+    private static int checkZeilenAnzahl(String dateiName) throws IOException {
         int anzahlZeilen = 0;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(dateiName))) {
             while (bufferedReader.readLine() != null) {

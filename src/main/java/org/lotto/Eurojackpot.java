@@ -27,7 +27,7 @@ public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
     @Override
     public String ausgabeTippreihe() throws EmptyArrayException {
 
-        if (fuenfAusFuenfzigTippreihe.length < 1) {
+        if (fuenfAusFuenfzigTippreihe[0] == 0) {
             throw new EmptyArrayException("Du hast noch keine Tippreihe erzeugt!");
         }
 
@@ -47,7 +47,7 @@ public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
 
     public String ausgabeZweiAusZehn() throws EmptyArrayException {
 
-        if (zweiAusZehnTippreihe.length < 1) {
+        if (zweiAusZehnTippreihe[0] == 0) {
             throw new EmptyArrayException("Du hast noch keine Tippreihe erzeugt!");
         }
 
@@ -56,7 +56,7 @@ public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
     }
 
 
-    private int zahlenGeneratorMitAussschlussVonUnglueckszahlen(int min, int max, int [] exclude) throws EmptyArrayException {
+    int zahlenGeneratorMitAussschlussVonUnglueckszahlen(int min, int max, int[] exclude) throws EmptyArrayException {
 
         if (exclude.length < 1){
             throw new EmptyArrayException("Du hast noch keine Unglückszahlen hinzugefügt");
@@ -68,7 +68,6 @@ public class Eurojackpot extends Lottoschein implements QuickTippGenerator {
             if (random < ex) {
                 break;
             }
-            random++;
         }
         return random;
     }

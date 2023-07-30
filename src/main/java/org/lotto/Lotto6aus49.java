@@ -20,7 +20,7 @@ public class Lotto6aus49 extends Lottoschein implements QuickTippGenerator {
     @Override
     public String ausgabeTippreihe() throws EmptyArrayException {
 
-        if (tippReihe.length < 1) {
+        if (tippReihe[0] == 0) {
             throw new EmptyArrayException("Du hast noch keine Tippreihe erzeugt!");
         }
 

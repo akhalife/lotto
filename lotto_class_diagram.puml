@@ -4,6 +4,7 @@ skinparam linetype ortho
 
 class LottoCLI {
    + main()
+   - displayMenu()
    - void unglücksZahlenErstellen()
    - void unglücksZahlenLöschen()
    - unglücksZahlenAusgeben(): String
@@ -11,6 +12,9 @@ class LottoCLI {
    - tippReiheEurojackpotErzeugen(): int[]
    - tippReihe6aus49Ausgeben(): int[]
    - tippReiheEurojackpotAusgeben(): int[]
+   + lesenNummernVonKommandozeile() : int[]
+   - checkZeilenAnzahl(): void
+
 }
 
 class lottoschein{
