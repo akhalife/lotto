@@ -29,7 +29,7 @@ public class LottoCLI {
             System.out.println("Option 4: Tippreihe für Lotto 6aus49 erzeugen");
             System.out.println("Option 5: Tippreihe für Eurojackpot erzeugen");
             System.out.println("Option 6: Tippreihe für 6aus49 ausgeben");
-            System.out.println("Option 8: Tippreihe für Eurojackpot ausgeben");
+            System.out.println("Option 7: Tippreihe für Eurojackpot ausgeben");
             System.out.println("8. Exit");
             System.out.print("Wähle eine Option (1-7): ");
 
